@@ -1,30 +1,7 @@
 import { Box, Typography, CircularProgress } from "@mui/material";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Item from "./Item";
-
-const API = "http://localhost:8080";
-
-const fetchPosts = async (type = "latest") => {
-    const endpoint = type === "following" ? "/posts/following" : "/posts";
-    const token = localStorage.getItem("token");
-    const headers = token ? { Authorization: `Bearer ${token}` } : {};
-
-    const res = await fetch(`${API}${endpoint}`, { headers });
-    if (!res.ok) throw new Error("Failed to fetch posts");
-    return res.json();
-};
-
-const deletePost = async id => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`${API}/posts/${id}`, {
-        method: "DELETE",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    if (!res.ok) throw new Error("Failed to delete post");
-    return res.json();
-};
+import { fetchPosts, deletePost } from "../../libs/fetcher";
 
 export default function Posts({ type = "latest" }) {
     const queryClient = useQueryClient();

@@ -24,31 +24,7 @@ import {
     ChatBubbleOutline as CommentIcon,
 } from "@mui/icons-material";
 
-const API = "http://localhost:8080";
-
-const likePost = async postId => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`${API}/posts/${postId}/like`, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    if (!res.ok) throw new Error("failed to like post");
-    return res.json();
-};
-
-const unlikePost = async postId => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`${API}/posts/${postId}/like`, {
-        method: "DELETE",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    if (!res.ok) throw new Error("failed to unlike post");
-    return res.json();
-};
+import { likePost, unlikePost } from "../../libs/fetcher";
 
 export default function Item({ post, remove }) {
     //home ka nay pass lote pay lite tr remove nk post nk ka

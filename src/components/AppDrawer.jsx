@@ -24,7 +24,9 @@ import { useNavigate } from "react-router";
 import { green } from "@mui/material/colors";
 
 export default function AppDrawer() {
-    const { showDrawer, setShowDrawer, auth, setAuth } = useApp();
+    const { showDrawer, setShowDrawer, auth, setAuth, setGlobalMessage } =
+        useApp();
+
     const navigate = useNavigate();
 
     const toggleDrawer = newOpen => () => {
@@ -47,7 +49,7 @@ export default function AppDrawer() {
                     gap: 2,
                 }}
             >
-                {auth && auth.name && (
+                {auth && auth.name ? (
                     <>
                         <Box
                             sx={{
@@ -66,7 +68,15 @@ export default function AppDrawer() {
                                 {auth.name[0] || "?"}
                             </Avatar>
                             <Box>
-                                <Typography variant="h6">
+                                <Typography
+                                    variant="h6"
+                                    onClick={() => {
+                                        navigate(`/users/${auth.id}`);
+                                    }}
+                                    sx={{
+                                        cursor: "pointer",
+                                    }}
+                                >
                                     {auth.name}
                                 </Typography>
                                 <Box sx={{ display: "flex", gap: 2 }}>
@@ -85,6 +95,41 @@ export default function AppDrawer() {
                                         {auth.followingCount || 0} following
                                     </Typography>
                                 </Box>
+                            </Box>
+                        </Box>
+                    </>
+                ) : (
+                    <>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: 2,
+                            }}
+                        >
+                            <Avatar
+                                sx={{
+                                    width: 64,
+                                    height: 64,
+                                    background: green[500],
+                                    cursor: "pointer",
+                                }}
+                                onClick={() =>
+                                    setGlobalMessage("Please login first")
+                                }
+                            >
+                                U
+                            </Avatar>
+                            <Box>
+                                <Typography
+                                    variant="h6"
+                                    onClick={() => {
+                                        navigate("/login");
+                                    }}
+                                    sx={{ cursor: "pointer" }}
+                                >
+                                    Unknown
+                                </Typography>
                             </Box>
                         </Box>
                     </>

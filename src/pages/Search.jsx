@@ -13,15 +13,7 @@ import {
 } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-
-const API = "http://localhost:8080";
-
-const searchUsers = async query => {
-    if (!query) return [];
-    const res = await fetch(`${API}/search?q=${query}`);
-    if (!res.ok) throw new Error("Failed to search users");
-    return res.json();
-};
+import { searchUsers } from "../../libs/fetcher";
 
 export default function Search() {
     const navigate = useNavigate();

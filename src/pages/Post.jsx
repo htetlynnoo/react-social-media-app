@@ -13,13 +13,7 @@ import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
 import { useApp } from "../AppProvider";
 
-const API = "http://localhost:8080";
-
-const fetchPost = async id => {
-    const res = await fetch(`${API}/posts/${id}`);
-    if (!res.ok) throw new Error("Failed to fetch post");
-    return res.json();
-};
+import { fetchPost } from "../../libs/fetcher";
 
 const deleteComment = async commentId => {
     const token = localStorage.getItem("token");

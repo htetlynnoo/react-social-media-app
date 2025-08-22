@@ -3,19 +3,7 @@ import { Box, Typography, OutlinedInput, Button } from "@mui/material";
 import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 
-async function postUser(data) {
-    const res = await fetch("http://localhost:8080/users", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    if (!res.ok) {
-        throw new Error("Network response was not ok");
-    }
-    return res.json(); //data to use so from json to js
-}
+import { postUser } from "../../libs/fetcher";
 
 export default function Register() {
     const navigate = useNavigate();

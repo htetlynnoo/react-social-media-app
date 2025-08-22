@@ -1,10 +1,14 @@
 import { createContext, useContext, useState, useMemo, useEffect } from "react";
-import { createTheme, ThemeProvider, CssBaseline } from "@mui/material";
+import {
+    createTheme,
+    ThemeProvider,
+    CssBaseline,
+    Snackbar,
+} from "@mui/material";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppRouter from "./AppRouter";
-
 
 const AppContext = createContext();
 const queryClient = new QueryClient();
@@ -17,6 +21,7 @@ export default function AppProvider() {
     const [mode, setMode] = useState("dark");
     const [showDrawer, setShowDrawer] = useState(false);
     const [auth, setAuth] = useState(false);
+    const [globalMessage, setGlobalMessage] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -56,6 +61,8 @@ export default function AppProvider() {
                 setShowDrawer,
                 auth,
                 setAuth,
+                setGlobalMessage,
+                globalMessage,
             }}
         >
             <QueryClientProvider client={queryClient}>
@@ -64,6 +71,14 @@ export default function AppProvider() {
                     <CssBaseline />
                 </ThemeProvider>
             </QueryClientProvider>
+
+            <Snackbar
+                open={Boolean(globalMessage)}
+                autoHideDuration={6000}
+                onClose={() => setGlobalMessage("")}
+                message={globalMessage}
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            />
         </AppContext.Provider>
     );
 }

@@ -10,12 +10,8 @@ import { useQuery } from "@tanstack/react-query";
 import Item from "../components/Item";
 import FollowButton from "../components/FollowButton";
 import { useApp } from "../AppProvider";
-const API = "http://localhost:8080";
-const fetchUser = async id => {
-    const res = await fetch(`${API}/users/${id}`);
-    if (!res.ok) throw new Error("Failed to fetch user");
-    return res.json();
-};
+import { fetchUser } from "../../libs/fetcher";
+
 export default function Profile() {
     const { id } = useParams();
     const { auth } = useApp();

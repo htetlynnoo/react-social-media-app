@@ -4,21 +4,7 @@ import { OutlinedInput, IconButton } from "@mui/material";
 
 import { Add as AddIcon } from "@mui/icons-material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-async function postPost({ content }) {
-    const api = "http://localhost:8080/posts";
-    const token = localStorage.getItem("token");
-    const res = await fetch(api, {
-        method: "POST",
-        body: JSON.stringify({ content }),
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-        },
-    });
-
-    return res.json();
-}
+import { postPost } from "../../libs/fetcher";
 
 export default function Form() {
     const inputRef = useRef();
@@ -55,6 +41,7 @@ export default function Form() {
                         <AddIcon />
                     </IconButton>
                 }
+                placeholder="What's on your mind"
             />
         </form>
     );

@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import AppProvider from "../../react-app/src/AppProvider.jsx";
+import AppProvider from "./AppProvider.jsx";
 
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";

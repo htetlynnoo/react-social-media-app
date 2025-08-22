@@ -1,11 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import Item from "../components/Item";
-import { useState } from "react";
 import { Box, Tabs, Tab } from "@mui/material";
-import { useNavigate, useSearchParams } from "react-router";
+
 import { useApp } from "../AppProvider";
 import Posts from "../components/Posts";
 import Form from "../components/Form";
+import { useSearchParams } from "react-router";
 
 export default function Home() {
     const { auth, showForm } = useApp();

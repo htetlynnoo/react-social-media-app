@@ -17,6 +17,7 @@ export default function Header() {
         useApp();
     const { pathname } = useLocation();
     const navigate = useNavigate();
+
     return (
         <AppBar position="static">
             <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -40,8 +41,7 @@ export default function Header() {
                             <BackIcon />
                         </IconButton>
                     )}
-
-                    <Typography>App</Typography>
+                    <Typography>SaySth &raquo;</Typography>
                 </Box>
                 <Box sx={{ display: "flex", gap: 1 }}>
                     {auth && (
@@ -62,16 +62,7 @@ export default function Header() {
                         <SearchIcon />
                     </IconButton>
 
-                    {mode == "dark" ? (
-                        <IconButton
-                            color="inherit"
-                            onClick={() => {
-                                setMode("light");
-                            }}
-                        >
-                            <LightModeIcon />
-                        </IconButton>
-                    ) : (
+                    {mode == "light" ? (
                         <IconButton
                             color="inherit"
                             onClick={() => {
@@ -79,6 +70,15 @@ export default function Header() {
                             }}
                         >
                             <DarkModeIcon />
+                        </IconButton>
+                    ) : (
+                        <IconButton
+                            color="inherit"
+                            onClick={() => {
+                                setMode("light");
+                            }}
+                        >
+                            <LightModeIcon />
                         </IconButton>
                     )}
                 </Box>

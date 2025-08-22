@@ -5,19 +5,7 @@ import { useApp } from "../AppProvider";
 import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 
-async function postLogin(data) {
-    const res = await fetch("http://localhost:8080/login", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
-    if (!res.ok) {
-        throw new Error("Network response was not ok");
-    }
-    return res.json(); //data to use so from json to js
-}
+import { postLogin } from "../../libs/fetcher";
 
 export default function Login() {
     const { setAuth } = useApp();

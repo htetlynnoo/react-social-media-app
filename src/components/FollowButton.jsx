@@ -2,31 +2,7 @@ import { Button } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useApp } from "../AppProvider";
 
-const API = "http://localhost:8080";
-
-const followUser = async userId => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`${API}/users/${userId}/follow`, {
-        method: "POST",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    if (!res.ok) throw new Error("Failed to follow user");
-    return res.json();
-};
-
-const unfollowUser = async userId => {
-    const token = localStorage.getItem("token");
-    const res = await fetch(`${API}/users/${userId}/follow`, {
-        method: "DELETE",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    if (!res.ok) throw new Error("Failed to unfollow user");
-    return res.json();
-};
+import { unfollowUser, followUser } from "../../libs/fetcher";
 
 export default function FollowButton({ userId, isFollowing }) {
     const { auth } = useApp();
