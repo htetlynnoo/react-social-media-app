@@ -7,7 +7,7 @@ import {
     Typography,
     Avatar,
     ButtonGroup,
-    Icon,
+    CardMedia,
 } from "@mui/material";
 
 import { useApp } from "../AppProvider";
@@ -32,7 +32,7 @@ export default function Item({ post, remove }) {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
 
-    const isLiked = post.likes?.some(like => like.userId === auth?.id);
+    const isLiked = post.likes?.some(like => like.actorId === auth?.id);
 
     const { mutate: like } = useMutation({
         mutationFn: likePost,
@@ -102,6 +102,14 @@ export default function Item({ post, remove }) {
                         </IconButton>
                     )}
                 </Box>
+
+                <CardMedia
+                    component="img"
+                    height="300"
+                    image={post.picture}
+                    alt="img"
+                    sx={{ mb: 3 }}
+                />
 
                 <Typography>{post.content}</Typography>
 

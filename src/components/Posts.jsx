@@ -18,7 +18,7 @@ export default function Posts({ type = "latest" }) {
     });
 
     const { mutate: remove } = useMutation({
-        mutationFn: deletePost,
+        mutationFn: id => deletePost(id),
         onMutate: async id => {
             await queryClient.cancelQueries({ queryKey });
 

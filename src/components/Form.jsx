@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { OutlinedInput, IconButton } from "@mui/material";
 
@@ -9,6 +9,7 @@ import { postPost } from "../../libs/fetcher";
 export default function Form() {
     const inputRef = useRef();
     const queryClient = useQueryClient();
+    const [file, setFile] = useState(null);
 
     const add = useMutation({
         mutationFn: postPost,
@@ -27,9 +28,12 @@ export default function Form() {
                 e.preventDefault();
 
                 const content = inputRef.current.value;
-                content && add.mutate({ content });
+                if (content || file) {
+                    add.mutate({ content, file });
+                }
 
                 e.currentTarget.reset();
+                setFile(null);
             }}
         >
             <OutlinedInput
@@ -41,8 +45,21 @@ export default function Form() {
                         <AddIcon />
                     </IconButton>
                 }
-                placeholder="What's on your mind"
+                placeholder="What's on your mind?"
+            />
+            <OutlinedInput
+                type="file"
+                inputProps={{ accept: "image/*" }}
+                onChange={e => setFile(e.target.files[0])}
             />
         </form>
     );
+
+    //2. inputProps={{ accept: "image/*" }}
+
+    ////This tells the file picker to only allow image files (jpg, png, gif, etc.).
+
+    //Without it, the user could pick any file (PDF, MP3, etc.).
+
+    //image/* means: "all image MIME types."
 }

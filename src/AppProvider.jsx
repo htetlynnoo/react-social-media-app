@@ -10,6 +10,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppRouter from "./AppRouter";
 
+//checked
+
 const AppContext = createContext();
 const queryClient = new QueryClient();
 export function useApp() {

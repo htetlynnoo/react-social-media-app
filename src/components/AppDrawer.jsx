@@ -85,14 +85,14 @@ export default function AppDrawer() {
                                         color="text.secondary"
                                         sx={{ fontSize: 12 }}
                                     >
-                                        {auth.followersCount || 0} followers
+                                        {auth._count?.follwers || 0} followers
                                     </Typography>
                                     <Typography
                                         variant="body2"
                                         color="text.secondary"
                                         sx={{ fontSize: 12 }}
                                     >
-                                        {auth.followingCount || 0} following
+                                        {auth._count?.following || 0} following
                                     </Typography>
                                 </Box>
                             </Box>

@@ -4,29 +4,29 @@ import { useApp } from "../AppProvider";
 
 import { unfollowUser, followUser } from "../../libs/fetcher";
 
-export default function FollowButton({ userId, isFollowing }) {
+export default function FollowButton({ aPersonWhoGotFollowedId, isFollowing }) {
     const { auth } = useApp();
     const queryClient = useQueryClient();
 
     const { mutate: follow, isLoading: isFollowLoading } = useMutation({
-        mutationFn: followUser,
+        mutationFn: () => followUser(aPersonWhoGotFollowedId),
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ["user", userId.toString()],
+                queryKey: ["user", aPersonWhoGotFollowedId.toString()],
             });
         },
     });
 
     const { mutate: unfollow, isLoading: isUnfollowLoading } = useMutation({
-        mutationFn: unfollowUser,
+        mutationFn: () => unfollowUser(aPersonWhoGotFollowedId),
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ["user", userId.toString()],
+                queryKey: ["user", aPersonWhoGotFollowedId.toString()],
             });
         },
     });
 
-    if (!auth || auth.id === userId) return null;
+    if (!auth || auth.id === aPersonWhoGotFollowedId) return null;
 
     const isLoading = isFollowLoading || isUnfollowLoading;
 
@@ -35,9 +35,9 @@ export default function FollowButton({ userId, isFollowing }) {
             variant={isFollowing ? "outlined" : "contained"}
             onClick={() => {
                 if (isFollowing) {
-                    unfollow(userId);
+                    unfollow(aPersonWhoGotFollowedId);
                 } else {
-                    follow(userId);
+                    follow(aPersonWhoGotFollowedId);
                 }
             }}
             disabled={isLoading}

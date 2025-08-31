@@ -12,6 +12,8 @@ import FollowButton from "../components/FollowButton";
 import { useApp } from "../AppProvider";
 import { fetchUser } from "../../libs/fetcher";
 
+//checked
+
 export default function Profile() {
     const { id } = useParams();
     const { auth } = useApp();
@@ -81,9 +83,9 @@ export default function Profile() {
                     </Typography>
                 </Box>
                 <FollowButton
-                    userId={user.id}
+                    aPersonWhoGotFollowedId={user.id}
                     isFollowing={user.followers?.some(
-                        f => f.followerId === auth?.id
+                        f => f.aPersonWhoFollowId === auth?.id
                     )}
                 />
             </Box>
