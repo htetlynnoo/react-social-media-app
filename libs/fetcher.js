@@ -183,7 +183,7 @@ export const fetchUser = async id => {
 //for Register.jsx
 
 export async function postUser(data) {
-    const res = await fetch(`${api}/user/register`, {
+    const res = await fetch(`${api}/register`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
