@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Post from "./pages/Post";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
+import Likes from "./pages/Like";
 
 export default function AppRouter() {
     return (
@@ -17,7 +18,8 @@ export default function AppRouter() {
                     <Route path="/users/:id" element={<Profile />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/posts/:id" element={<Post />} />
-                    <Route path="/Register" element={<Register />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/posts/:id/likes" element={<Likes />} />
                 </Route>
             </Routes>
         </BrowserRouter>

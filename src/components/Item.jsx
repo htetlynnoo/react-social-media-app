@@ -129,7 +129,11 @@ export default function Item({ post, remove }) {
                                 <LikeIcon color="error" fontSize="inherit" />
                             )}
                         </IconButton>
-                        <Button variant="text" size="small">
+                        <Button
+                            variant="text"
+                            size="small"
+                            onClick={() => navigate(`/posts/${post.id}/likes`)}
+                        >
                             {post.likes?.length || 0}
                         </Button>
                     </ButtonGroup>

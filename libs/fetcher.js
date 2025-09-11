@@ -148,6 +148,17 @@ export const unlikePost = async postId => {
     return res.json();
 };
 
+export const getLikeList = async postId => {
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${api}/likes/posts/${postId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    if (!res.ok) throw new Error("failed to fetch like list");
+    return res.json();
+};
+
 // for login.jsx
 
 export async function postLogin(data) {
@@ -247,32 +258,3 @@ export const unfollowUser = async aPersonWhoGotFollowedId => {
 };
 
 //for like
-export function getAuthHeaders() {
-    const token = localStorage.getItem("token");
-    return token ? { Authorization: `Bearer ${token}` } : {};
-}
-
-export async function fetchWithAuth(endpoint, options = {}) {
-    const headers = {
-        ...getAuthHeaders(),
-        ...options.headers,
-    };
-
-    const response = await fetch(`${api}${endpoint}`, {
-        ...options,
-        headers,
-    });
-
-    if (!response.ok) {
-        const error = await response
-            .json()
-            .catch(() => ({ message: "An error occurred" }));
-        throw new Error(
-            error.message ||
-                error.msg ||
-                `HTTP error! status: ${response.status}`
-        );
-    }
-
-    return response.json();
-}
