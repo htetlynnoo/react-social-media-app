@@ -15,10 +15,12 @@ import { useApp } from "../AppProvider";
 
 import { fetchPost } from "../../libs/fetcher";
 
+const api = import.meta.env.VITE_API;
+
 const deleteComment = async commentId => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch(`${API}/comments/${commentId}`, {
+    const res = await fetch(`${api}/comments/${commentId}`, {
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${token}`,
@@ -45,7 +47,7 @@ export default function Post() {
     });
 
     const { mutate: removeComment } = useMutation({
-        mutationFn: deleteComment,
+        mutationFn: id => deleteComment(id),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["post", id] });
         },

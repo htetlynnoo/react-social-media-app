@@ -47,10 +47,10 @@ export default function Comment({ comment, remove }) {
                                 lineHeight: "24px",
                             }}
                         >
-                            {comment.user.name}
+                            {comment.commentor.name}
                         </Typography>
                     </Box>
-                    {auth && auth.id === comment.user.id && (
+                    {auth && auth.id === comment.commentor.id && (
                         <IconButton
                             size="small"
                             onClick={() => remove(comment.id)}
