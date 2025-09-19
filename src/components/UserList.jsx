@@ -6,9 +6,13 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router";
+import FollowSwitch from "./FollowSwitch";
+import { useApp } from "../AppProvider";
 
 export default function UserList({ likeLists, title }) {
     const navigate = useNavigate();
+
+    const { auth } = useApp();
     return (
         <Box>
             <Typography variant="h4" sx={{ textAlign: "center" }}>
@@ -17,26 +21,43 @@ export default function UserList({ likeLists, title }) {
             <List
                 sx={{
                     width: "100%",
-                    maxWidth: 360,
+                    maxWidth: "content",
                     bgcolor: "background.paper",
                 }}
             >
                 {likeLists.map(likeList => (
-                    <ListItemButton
-                        onClick={() => {
-                            navigate(`/users/${likeList.actorId}`);
+                    <Box
+                        key={likeList.actor.name}
+                        sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
                         }}
                     >
-                        <ListItem alignItems="flex-start">
-                            <ListItemAvatar>
-                                <Avatar />
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={likeList.actor.name}
-                                secondary={likeList.actor.bio}
+                        <ListItemButton
+                            onClick={() => {
+                                navigate(`/users/${likeList.actorId}`);
+                            }}
+                        >
+                            <ListItem alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <Avatar />
+                                </ListItemAvatar>
+                                <ListItemText
+                                    primary={likeList.actor.name}
+                                    secondary={likeList.actor.bio}
+                                />
+                            </ListItem>
+                        </ListItemButton>
+                        <Box>
+                            <FollowSwitch
+                                aPersonWhoGotFollowedId={likeList.actorId}
+                                isFollowing={likeList.actor.followers?.some(
+                                    f => f.aPersonWhoFollowId === auth?.id
+                                )}
                             />
-                        </ListItem>
-                    </ListItemButton>
+                        </Box>
+                    </Box>
                 ))}
             </List>
         </Box>

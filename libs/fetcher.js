@@ -247,12 +247,15 @@ export const followUser = async aPersonWhoGotFollowedId => {
 
 export const unfollowUser = async aPersonWhoGotFollowedId => {
     const token = localStorage.getItem("token");
-    const res = await fetch(`${api}/users/${aPersonWhoGotFollowedId}/follow`, {
-        method: "DELETE",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
+    const res = await fetch(
+        `${api}/users/${aPersonWhoGotFollowedId}/unfollow`,
+        {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
     if (!res.ok) throw new Error("Failed to unfollow user");
     return res.json();
 };

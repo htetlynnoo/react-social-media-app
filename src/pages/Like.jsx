@@ -12,7 +12,7 @@ export default function Likes() {
         isError,
         data: likeLists,
     } = useQuery({
-        queryKey: ["LikeList"],
+        queryKey: ["LikeLists"],
         queryFn: () => getLikeList(id),
     });
 

@@ -8,7 +8,7 @@ import {
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import Item from "../components/Item";
-import FollowButton from "../components/FollowButton";
+import FollowSwitch from "../components/FollowSwitch";
 import { useApp } from "../AppProvider";
 import { fetchUser } from "../../libs/fetcher";
 
@@ -82,7 +82,7 @@ export default function Profile() {
                         {user._count?.following || 0} following
                     </Typography>
                 </Box>
-                <FollowButton
+                <FollowSwitch
                     aPersonWhoGotFollowedId={user.id}
                     isFollowing={user.followers?.some(
                         f => f.aPersonWhoFollowId === auth?.id

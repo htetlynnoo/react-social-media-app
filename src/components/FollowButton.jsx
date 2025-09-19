@@ -26,9 +26,8 @@ export default function FollowButton({ aPersonWhoGotFollowedId, isFollowing }) {
         },
     });
 
-    if (!auth || auth.id === aPersonWhoGotFollowedId) return null;
-
     const isLoading = isFollowLoading || isUnfollowLoading;
+    if (!auth || auth.id === aPersonWhoGotFollowedId) return null;
 
     return (
         <Button
