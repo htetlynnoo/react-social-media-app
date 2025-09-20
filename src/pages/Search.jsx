@@ -56,7 +56,7 @@ export default function Search() {
                 <Box sx={{ textAlign: "center", mt: 4 }}>Loading...</Box>
             ) : (
                 <List>
-                    {Array.isArray(data) &&
+                    {data &&
                         data.map(item => (
                             <Box
                                 sx={{
@@ -64,6 +64,7 @@ export default function Search() {
                                     flexDirection: "row",
                                     alignItems: "center",
                                 }}
+                                key={item.name}
                             >
                                 <ListItemButton
                                     onClick={() => {
@@ -94,7 +95,7 @@ export default function Search() {
                             </Box>
                         ))}
 
-                    {Array.isArray(data) && data.length === 0 && (
+                    {data && data.length === 0 && (
                         <Typography
                             color="text.secondary"
                             textAlign="center"

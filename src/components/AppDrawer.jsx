@@ -35,6 +35,7 @@ export default function AppDrawer() {
     const { data: me } = useQuery({
         queryKey: ["Me"],
         queryFn: () => getMyData(token),
+        enabled: !!token,
     });
 
     const toggleDrawer = newOpen => () => {
