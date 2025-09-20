@@ -2,10 +2,12 @@ import { Box, Typography, CircularProgress } from "@mui/material";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import Item from "./Item";
 import { fetchPosts, deletePost } from "../../libs/fetcher";
+import { useApp } from "../AppProvider";
 
 export default function Posts({ type = "latest" }) {
     const queryClient = useQueryClient();
     const queryKey = ["posts", type];
+    const { isPosting } = useApp();
 
     const {
         data: posts,
@@ -22,7 +24,7 @@ export default function Posts({ type = "latest" }) {
         onMutate: async id => {
             await queryClient.cancelQueries({ queryKey });
 
-            queryClient.setQueryData(queryKey, old => {
+            await queryClient.setQueryData(queryKey, old => {
                 return old ? old.filter(post => post.id !== id) : [];
             });
         },
@@ -58,7 +60,17 @@ export default function Posts({ type = "latest" }) {
         );
     }
 
-    return posts.map(post => (
-        <Item key={post.id} post={post} remove={remove} />
-    ));
+    return (
+        <>
+            {isPosting && (
+                <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+                    <CircularProgress size={20} />
+                    <Typography>Uploading your post...</Typography>
+                </Box>
+            )}
+            {posts.map(post => (
+                <Item key={post.id} post={post} remove={remove} />
+            ))}
+        </>
+    );
 }

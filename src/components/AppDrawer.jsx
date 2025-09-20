@@ -22,12 +22,20 @@ import {
 import { useApp } from "../AppProvider";
 import { useNavigate } from "react-router";
 import { green } from "@mui/material/colors";
+import { useQuery } from "@tanstack/react-query";
+import { getMyData } from "../../libs/fetcher";
 
 export default function AppDrawer() {
     const { showDrawer, setShowDrawer, auth, setAuth, setGlobalMessage } =
         useApp();
 
     const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+
+    const { data: me } = useQuery({
+        queryKey: ["Me"],
+        queryFn: () => getMyData(token),
+    });
 
     const toggleDrawer = newOpen => () => {
         setShowDrawer(newOpen);
@@ -49,7 +57,7 @@ export default function AppDrawer() {
                     gap: 2,
                 }}
             >
-                {auth && auth.name ? (
+                {auth ? (
                     <>
                         <Box
                             sx={{
@@ -65,7 +73,7 @@ export default function AppDrawer() {
                                     background: green[500],
                                 }}
                             >
-                                {auth.name[0] || "?"}
+                                {me?.name[0] || "?"}
                             </Avatar>
                             <Box>
                                 <Typography
@@ -77,7 +85,7 @@ export default function AppDrawer() {
                                         cursor: "pointer",
                                     }}
                                 >
-                                    {auth.name}
+                                    {me?.name}
                                 </Typography>
                                 <Box sx={{ display: "flex", gap: 2 }}>
                                     <Typography
@@ -85,14 +93,14 @@ export default function AppDrawer() {
                                         color="text.secondary"
                                         sx={{ fontSize: 12 }}
                                     >
-                                        {auth._count?.follwers || 0} followers
+                                        {me?._count?.follwers || 0} followers
                                     </Typography>
                                     <Typography
                                         variant="body2"
                                         color="text.secondary"
                                         sx={{ fontSize: 12 }}
                                     >
-                                        {auth._count?.following || 0} following
+                                        {me?._count?.following || 0} following
                                     </Typography>
                                 </Box>
                             </Box>

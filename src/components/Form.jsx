@@ -6,12 +6,14 @@ import { OutlinedInput, IconButton } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postPost } from "../../libs/fetcher";
+import { useApp } from "../AppProvider";
 
 export default function Form() {
     const inputRef = useRef();
     const queryClient = useQueryClient();
     const [file, setFile] = useState(null);
     const [openAlert, setOpenAlert] = useState(false);
+    const { setIsPosting, isPosting } = useApp();
 
     const handleCloseAlert = (event, reason) => {
         if (reason === "clickaway") return;
@@ -20,11 +22,10 @@ export default function Form() {
 
     const add = useMutation({
         mutationFn: postPost,
+        onMutate: () => setIsPosting(true),
         onSuccess: async item => {
-            await queryClient.invalidateQueries("posts");
-            await queryClient.setQueryData(["posts"], old => {
-                return [item, ...old];
-            });
+            await queryClient.invalidateQueries(["posts"]);
+            setIsPosting(false);
         },
     });
 
@@ -42,7 +43,6 @@ export default function Form() {
                     }
 
                     add.mutate({ content, file });
-
                     e.currentTarget.reset();
                     setFile(null);
                 }}
@@ -52,17 +52,19 @@ export default function Form() {
                     inputProps={{ accept: "image/*" }}
                     onChange={e => setFile(e.target.files[0])}
                     style={{ width: "100%" }}
+                    disabled={isPosting}
                 />
                 <OutlinedInput
                     type="text"
                     style={{ width: "100%" }}
                     inputRef={inputRef}
                     endAdornment={
-                        <IconButton type="submit">
+                        <IconButton type="submit" disabled={isPosting}>
                             <AddIcon />
                         </IconButton>
                     }
                     placeholder="What's on your mind?"
+                    disabled={isPosting}
                 />
             </form>
             <Snackbar

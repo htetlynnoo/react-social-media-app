@@ -259,4 +259,12 @@ export async function searchFetcher(q) {
     return res.json();
 }
 
-//for like
+//for me
+export async function getMyData(token) {
+    const res = await fetch(`${import.meta.env.VITE_API}/verify`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    return res.json();
+}

@@ -25,6 +25,7 @@ export default function AppProvider() {
     const [showDrawer, setShowDrawer] = useState(false);
     const [auth, setAuth] = useState(false);
     const [globalMessage, setGlobalMessage] = useState("");
+    const [isPosting, setIsPosting] = useState(false);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -66,6 +67,8 @@ export default function AppProvider() {
                 setAuth,
                 setGlobalMessage,
                 globalMessage,
+                isPosting,
+                setIsPosting,
             }}
         >
             <QueryClientProvider client={queryClient}>

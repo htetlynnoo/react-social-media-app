@@ -44,6 +44,7 @@ export default function FollowSwitch({
             queryClient.invalidateQueries({
                 queryKey: ["Search Users", debounceQuery],
             });
+            queryClient.invalidateQueries({ queryKey: ["Me"] });
         },
     });
 
@@ -79,6 +80,7 @@ export default function FollowSwitch({
             queryClient.invalidateQueries({
                 queryKey: ["Search Users", debounceQuery],
             });
+            queryClient.invalidateQueries({ queryKey: ["Me"] });
         },
     });
     const isLoading = follow.isLoading || unFollow.isLoading;
