@@ -1,9 +1,13 @@
-import { Button } from "@mui/material";
+import { Button, debounce } from "@mui/material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { followUser, unfollowUser } from "../../libs/fetcher";
 import { useApp } from "../AppProvider";
 
-export default function FollowSwitch({ aPersonWhoGotFollowedId, isFollowing }) {
+export default function FollowSwitch({
+    aPersonWhoGotFollowedId,
+    isFollowing,
+    debounceQuery,
+}) {
     const { auth } = useApp();
     const queryClient = useQueryClient();
 
@@ -37,6 +41,9 @@ export default function FollowSwitch({ aPersonWhoGotFollowedId, isFollowing }) {
             queryClient.invalidateQueries({
                 queryKey: ["LikeLists"],
             });
+            queryClient.invalidateQueries({
+                queryKey: ["Search Users", debounceQuery],
+            });
         },
     });
 
@@ -68,6 +75,9 @@ export default function FollowSwitch({ aPersonWhoGotFollowedId, isFollowing }) {
             });
             queryClient.invalidateQueries({
                 queryKey: ["LikeLists"],
+            });
+            queryClient.invalidateQueries({
+                queryKey: ["Search Users", debounceQuery],
             });
         },
     });

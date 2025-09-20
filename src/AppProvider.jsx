@@ -9,6 +9,7 @@ import {
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import AppRouter from "./AppRouter";
+import { useQuery } from "@tanstack/react-query";
 
 //checked
 

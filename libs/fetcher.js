@@ -206,14 +206,6 @@ export async function postUser(data) {
     }
     return res.json(); //data to use so from json to js
 }
-//for Search.jsx
-
-export const searchUsers = async query => {
-    if (!query) return [];
-    const res = await fetch(`${api}/search?q=${query}`);
-    if (!res.ok) throw new Error("Failed to search users");
-    return res.json();
-};
 
 //for CommentForm.jsx
 
@@ -259,5 +251,12 @@ export const unfollowUser = async aPersonWhoGotFollowedId => {
     if (!res.ok) throw new Error("Failed to unfollow user");
     return res.json();
 };
+
+//search fetcher
+
+export async function searchFetcher(q) {
+    const res = await fetch(`${api}/search?q=${q}`);
+    return res.json();
+}
 
 //for like
