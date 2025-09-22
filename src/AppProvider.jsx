@@ -29,6 +29,7 @@ export default function AppProvider() {
 
     useEffect(() => {
         const token = localStorage.getItem("token");
+
         if (token) {
             fetch(`${import.meta.env.VITE_API}/verify`, {
                 headers: {
@@ -43,6 +44,8 @@ export default function AppProvider() {
                     setAuth(false);
                     localStorage.removeItem("token");
                 });
+        } else {
+            return;
         }
     }, []);
 
