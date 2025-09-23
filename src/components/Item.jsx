@@ -36,6 +36,19 @@ export default function Item({ post, remove }) {
 
     const { mutate: like } = useMutation({
         mutationFn: likePost,
+        onMutate: () => {
+            queryClient.cancelQueries({ queryKey: ["posts"] });
+            queryClient.setQueryData(oldPosts =>
+                oldPosts.map(item => {
+                    if (item.id === post.id) {
+                        return {
+                            ...item,
+                            likes: [...item.likes, { actorId: auth.id }],
+                        };
+                    }
+                })
+            );
+        },
         onSuccess: () => {
             queryClient.invalidateQueries("posts"); // d mhr d lo lote mha home mhr ll query client shi tl ae dr ko outdated lote pee unlike or like ka nay arr lone detail pyn pay htr tk hr ko update lote pyit lite tr
             queryClient.invalidateQueries("user");
@@ -44,6 +57,21 @@ export default function Item({ post, remove }) {
 
     const { mutate: unlike } = useMutation({
         mutationFn: unlikePost,
+        onMutate: () => {
+            queryClient.cancelQueries({ queryKey: ["posts"] });
+            queryClient.setQueryData(oldPosts =>
+                oldPosts.map(item => {
+                    if (item.id === post.id) {
+                        return {
+                            ...item,
+                            likes: item.likes.filter(
+                                like => like.actorId !== auth.id
+                            ),
+                        };
+                    }
+                })
+            );
+        },
         onSuccess: () => {
             queryClient.invalidateQueries("posts");
             queryClient.invalidateQueries("user");

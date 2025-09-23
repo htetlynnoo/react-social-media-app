@@ -43,9 +43,8 @@ export default function AppProvider() {
                 .catch(() => {
                     setAuth(false);
                     localStorage.removeItem("token");
+                    setPreviousToken(null);
                 });
-        } else {
-            return;
         }
     }, []);
 

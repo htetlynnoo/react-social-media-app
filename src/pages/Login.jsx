@@ -23,6 +23,7 @@ export default function Login() {
         onSuccess: data => {
             setAuth(data.user);
             localStorage.setItem("token", data.token);
+
             navigate("/");
         },
     });

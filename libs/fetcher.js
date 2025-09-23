@@ -197,14 +197,17 @@ export async function postUser(data) {
     const res = await fetch(`${api}/register`, {
         method: "POST",
         body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
     });
+
+    const json = await res.json();
+
     if (!res.ok) {
-        throw new Error("Network response was not ok");
+        // Throw backend message
+        throw new Error(json.msg || "Something went wrong");
     }
-    return res.json(); //data to use so from json to js
+
+    return json; // created user data
 }
 
 //for CommentForm.jsx
@@ -266,5 +269,45 @@ export async function getMyData(token) {
             Authorization: `Bearer ${token}`,
         },
     });
+    return res.json();
+}
+
+//for notifications
+
+export async function getAllNotiFetcher() {
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${api}/notis`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    if (!res.ok) throw new Error("fail to fetch notifications");
+
+    return res.json();
+}
+
+export async function readingAllNoti() {
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${api}/notis/readall`, {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    if (!res.ok) throw new Error("fail to read notificaitons");
+
+    return res.json();
+}
+
+export async function readDesireNoti(id) {
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${api}/notis/${id}/read`, {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    if (!res.ok) throw new Error("fail to read notificaiton");
+
     return res.json();
 }

@@ -7,6 +7,7 @@ import Post from "./pages/Post";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
 import Likes from "./pages/Like";
+import Noti from "./pages/Noti";
 
 export default function AppRouter() {
     return (
@@ -20,6 +21,7 @@ export default function AppRouter() {
                     <Route path="/posts/:id" element={<Post />} />
                     <Route path="/register" element={<Register />} />
                     <Route path="/posts/:id/likes" element={<Likes />} />
+                    <Route path="/noti" element={<Noti />} />
                 </Route>
             </Routes>
         </BrowserRouter>

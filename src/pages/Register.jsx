@@ -4,9 +4,12 @@ import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 
 import { postUser } from "../../libs/fetcher";
+import { useApp } from "../AppProvider";
 
 export default function Register() {
     const navigate = useNavigate();
+
+    const { setGlobalMessage, globalMessage } = useApp();
 
     const {
         register,
@@ -17,11 +20,15 @@ export default function Register() {
 
     const create = useMutation({
         mutationFn: postUser,
-        onSuccess: () => {
+        onSuccess: data => {
+            console.log("Returned data:", data);
+
             navigate("/Login");
         },
-        onError: () => {
-            setError("username or password is required");
+        onError: error => {
+            setGlobalMessage(error.message);
+
+            console.log("Error message:", error.message);
         },
     });
 
@@ -53,9 +60,10 @@ export default function Register() {
                 />
                 {errors.username && (
                     <Typography color="error">
-                        This field is required
+                        {errors.username.message || "This field is required"}
                     </Typography>
                 )}
+
                 <OutlinedInput
                     fullWidth
                     placeholder="bio"
