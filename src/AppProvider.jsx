@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AppSocket from "./AppSocket";
 
 import AppRouter from "./AppRouter";
 import { useQuery } from "@tanstack/react-query";
@@ -43,7 +44,6 @@ export default function AppProvider() {
                 .catch(() => {
                     setAuth(false);
                     localStorage.removeItem("token");
-                    setPreviousToken(null);
                 });
         }
     }, []);
@@ -78,6 +78,7 @@ export default function AppProvider() {
                     <AppRouter />
                     <CssBaseline />
                 </ThemeProvider>
+                <AppSocket />
             </QueryClientProvider>
 
             <Snackbar
